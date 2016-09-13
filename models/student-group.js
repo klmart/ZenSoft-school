@@ -12,6 +12,10 @@ class StudentGroup {
     this.isActive = false;
   }
 
+  // isActive(status){
+  //   this.isActive = status;
+  // }
+
   setLevel(level){
     this.level = level;
   }

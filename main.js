@@ -43,10 +43,14 @@ let jofri = new Student({name: 'Jofri Barateon', contacts: '+100 200 320', dateO
 
 // Groups
 let group1E = new StudentGroup(1,'E');
-group1E.save();
+// group1E.save();
+StudentGroupService.addStudentGroup(group1E);
+group1E.isActive = true;
 
 let group2S = new StudentGroup(2,'S');
-group2S.save();
+// group2S.save();
+StudentGroupService.addStudentGroup(group2S);
+// group2S.isActive = true;
 
 // Student Groups
 StudentGroupService.addStudent(jon, '1 E');
@@ -99,8 +103,12 @@ TeachersRoleService.addTeacherRole(katrineBiology);
 
 
 StudentGroupService.addTeacherRole(johnMath, '1 E');
+StudentGroupService.addTeacherRole(johnMath, '2 S');
 StudentGroupService.addTeacherRole(JohnClassroomMaster, '1 E');
-StudentGroupService.addTeacherRole(katrineBiology, '2 S');
+// StudentGroupService.addTeacherRole(katrineBiology, '2 S');
 
 // console.log(TeacherService.salary(katrine));
+// console.log(group2S.teachersRole);
+// console.log(group2S);
+// console.log(group1E.isActive);
 console.log(TeacherService.salary(john));

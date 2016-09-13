@@ -40,18 +40,22 @@ class StudentGroupService {
         return teachers;
     }
 
-
-    static
-    getStudents(name) {
+    static getStudents(name) {
         let group = StudentGroupService.findByGroupName(name);
         return group.students;
     }
 
-    static
-    findAll() {
+    static findAll() {
         let array = [];
         return array.concat(studentGroups);
     }
+
+    static activeStudentGroups(){
+        return studentGroups.filter(function (studentGroup) {
+            return studentGroup.isActive === true;
+        })
+    }
+
 }
 
 module.exports = StudentGroupService;

@@ -17,13 +17,11 @@ class TeacherService {
     return array.concat(teachers);
   }
 
-
-
   static salary(teacher){
     let subjectPayout = 0;
     let teacherRoles = TeachersRoleService.findTeacherRolesByTeacher(teacher);
 
-    teacherRoles.forEach(function (teacherRole) {
+      teacherRoles.forEach(function (teacherRole) {
       subjectPayout += SubjectService.getPayment(teacherRole.subject);
     });
 

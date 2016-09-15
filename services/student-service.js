@@ -1,4 +1,3 @@
-const Student = require('../models/student');
 const students = [];
 
 class StudentService {
@@ -39,3 +38,4 @@ class StudentService {
 }
 
 module.exports = StudentService;
+const Student = require('../models/student');

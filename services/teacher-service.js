@@ -1,39 +1,44 @@
-const Teacher = require('../models/teacher');
-const SubjectService = require('./subject-service');
-const TeachersRoleService = require('../services/teachers-role-service');
+
 
 const teachers = [];
 
 class TeacherService {
-  constructor() {
-  }
+    constructor() {
+    }
 
-  static add(teacher){
-    teachers.push(teacher);
-  }
+    static create(name, contacts) {
+        return new Teacher(name, contacts);
+    }
 
-  static findAll(){
-    let array  =[];
-    return array.concat(teachers);
-  }
+    static add(teacher) {
+        teachers.push(teacher);
+    }
 
-  static salary(teacher){
-    let subjectPayout = 0;
-    let teacherRoles = TeachersRoleService.findTeacherRolesByTeacher(teacher);
+    static findAll() {
+        let array = [];
+        return array.concat(teachers);
+    }
 
-      teacherRoles.forEach(function (teacherRole) {
-      subjectPayout += SubjectService.getPayment(teacherRole.subject);
-    });
+    static salary(teacher) {
+        let subjectPayout = 0;
+        let teacherRoles = TeachersRoleService.findTeacherRolesByTeacher(teacher);
 
-    let positionPayout = 0;
-    teacher.positions.forEach(function (position) {
-      positionPayout += position.quote;
-    });
+        teacherRoles.forEach(function (teacherRole) {
+            subjectPayout += SubjectService.getPayment(teacherRole.subject);
+        });
 
-    return (+subjectPayout) + (+positionPayout);
+        let positionPayout = 0;
+        teacher.positions.forEach(function (position) {
+            positionPayout += position.quote;
+        });
 
-  }
+        return (+subjectPayout) + (+positionPayout);
+
+    }
 
 }
 
 module.exports = TeacherService;
+const SubjectService = require('./subject-service');
+const TeachersRoleService = require('../services/teachers-role-service');
+const Teacher = require('../models/teacher');

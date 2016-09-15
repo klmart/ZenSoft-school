@@ -1,5 +1,5 @@
 const Person = require('./common/person');
-const Parent = require ('./parent');
+// const Parent = require ('./parent');
 const StudentService = require('../services/student-service')
 
 class Student extends Person {

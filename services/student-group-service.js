@@ -1,4 +1,3 @@
-const StudentGroup = require('../models/student-group');
 const StudentService = require('./student-service');
 const TeachersRoleService = require('./teachers-role-service');
 
@@ -52,10 +51,11 @@ class StudentGroupService {
 
     static activeStudentGroups(){
         return studentGroups.filter(function (studentGroup) {
-            return studentGroup.isActive === true;
+            return studentGroup.isActive;
         })
     }
 
 }
 
 module.exports = StudentGroupService;
+const StudentGroup = require('../models/student-group');

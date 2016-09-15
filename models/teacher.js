@@ -1,6 +1,6 @@
 const Person = require('./common/person');
-const Subject = require('./subject');
-const Position = require('./position');
+// const Subject = require('./subject');
+// const Position = require('./position');
 const TeacherService = require('../services/teacher-service');
 
 class Teacher extends Person {

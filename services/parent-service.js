@@ -1,4 +1,3 @@
-const Parent = require('../models/parent');
 const parents = [];
 
 class ParentService {
@@ -42,3 +41,4 @@ class ParentService {
 
 
 module.exports = ParentService;
+const Parent = require('../models/parent');

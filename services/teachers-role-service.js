@@ -1,10 +1,12 @@
-const TeachersRole = require('../models/teachers-role');
-const StudentGroupService = require('../services/student-group-service');
 
 const teachersRole = [];
 
 class TeachersRoleService {
     constructor() {
+    }
+
+    static create(teacher, subject){
+        return new TeachersRole(teacher, subject);
     }
 
     static addTeacherRole(teacherRole) {
@@ -23,7 +25,6 @@ class TeachersRoleService {
             });
 
         });
-
         return activeTeachersRoles;
     }
 
@@ -35,6 +36,9 @@ class TeachersRoleService {
         })
     }
 
+
 }
 
 module.exports = TeachersRoleService;
+const StudentGroupService = require('../services/student-group-service');
+const TeachersRole = require('../models/teachers-role');

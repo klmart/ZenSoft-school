@@ -1,11 +1,3 @@
-const Parent = require('./models/parent');
-const Student = require('./models/student');
-const Teacher = require('./models/teacher');
-const Subject = require('./models/subject');
-const Position = require('./models/position');
-const Book = require('./models/book');
-const StudentGroup = require('./models/student-group');
-const TeachersRole = require('./models/teachers-role');
 
 const ParentService = require('./services/parent-service');
 const StudentService = require('./services/student-service');
@@ -15,41 +7,41 @@ const PositionService = require('./services/position-service');
 const BookService = require('./services/book-service');
 const StudentGroupService = require('./services/student-group-service');
 const TeachersRoleService = require('./services/teachers-role-service');
-const classroomTeacher = new Subject('classroomTeacher', null, 1, 2000);
+
+const classroomTeacher = SubjectService.create('classroomTeacher', null, 1, 1);
 
 // Parents
-let lyanna = new Parent({name: 'Lyanna Stark', contacts: '+ 1 1000 101', dateOfBirth: '1.01.1972'});
+
+let lyanna = ParentService.create({name: 'Lyanna Stark', contacts: '+ 1 1000 101', dateOfBirth: '1.01.1972'});
 lyanna.save();
 
-// let lyanna = ParentService.create({name: 'Lyanna Stark', contacts: '+ 1 1000 101', dateOfBirth: '1.01.1972'});
-// lyanna.save();
-
-let ned = new Parent({name: 'Ned Stark', contacts: '+ 1 1000 400', dateOfBirth: '1.01.1961'});
+let ned = ParentService.create({name: 'Ned Stark', contacts: '+ 1 1000 400', dateOfBirth: '1.01.1961'});
 ned.save();
 
 // Students
-let jon =  new Student({name: 'Jon Targaryen', contacts: '+ 1 1000 100', dateOfBirth: '1.01.1980'});
+
+let jon =  StudentService.create({name: 'Jon Targaryen', contacts: '+ 1 1000 100', dateOfBirth: '1.01.1980'});
 jon.save();
 jon.addParent(lyanna);
 
-
-let arya = new Student({name: 'Arya Stark', contacts: '+ 1 1000 200', dateOfBirth: '1.01.1992'});
+let arya = StudentService.create({name: 'Arya Stark', contacts: '+ 1 1000 200', dateOfBirth: '1.01.1992'});
 arya.save();
 arya.addParent(ned);
 
-let ramsey = new Student({name: 'Ramsey Snow', contacts: '+100 200 300', dateOfBirth: '12.04.1990'});
+let ramsey = StudentService.create({name: 'Ramsey Snow', contacts: '+100 200 300', dateOfBirth: '12.04.1990'});
+ramsey.save();
 
-let jofri = new Student({name: 'Jofri Barateon', contacts: '+100 200 320', dateOfBirth: '12.04.1993'});
+let jofri = StudentService.create({name: 'Jofri Barateon', contacts: '+100 200 320', dateOfBirth: '12.04.1993'});
+jofri.save();
+
 
 // Groups
-let group1E = new StudentGroup(1,'E');
-// group1E.save();
-StudentGroupService.addStudentGroup(group1E);
+let group1E = StudentGroupService.create(1,'E');
+group1E.save();
 group1E.isActive = true;
 
-let group2S = new StudentGroup(2,'S');
-// group2S.save();
-StudentGroupService.addStudentGroup(group2S);
+let group2S = StudentGroupService.create(2,'S');
+group2S.save();
 // group2S.isActive = true;
 
 // Student Groups
@@ -61,28 +53,28 @@ StudentGroupService.addStudent(ramsey, '1 E');
 StudentGroupService.addStudent(jofri, '2 S');
 
 // Subjects
-let math = new Subject('Math', 1, 30, 160);
+let math = SubjectService.create('Math', 1, 3, 100);
 math.save();
-
-let biology = new Subject('Biology', 2, 20, 130);
+let biology = SubjectService.create('Biology', 2, 20, 130);
 biology.save();
 
-let chemistry = new Subject('Chemistry', 6, 150);
+let chemistry = SubjectService.create('Chemistry', 6, 150);
+chemistry.save();
 
 // Positions
-let director = new Position('Director', 3000);
+let director = PositionService.create('Director', 2);
 director.save();
 
-let headTeacher = new Position('Head Teacher', 2500);
+let headTeacher = PositionService.create('Head Teacher', 2500);
 headTeacher.save();
 
 // Teachers
-let john = new Teacher({name: 'John Doe', contacts: '+200100'});
+let john = TeacherService.create({name: 'John Doe', contacts: '+200100'});
 john.save();
 john.addSubject(math);
 john.addPosition(director);
 
-let katrine = new Teacher({name: 'Katrine Milley', contacts: '+300100299'});
+let katrine = TeacherService.create({name: 'Katrine Milley', contacts: '+300100299'});
 katrine.save();
 katrine.addSubject(biology);
 katrine.addSubject(chemistry);
@@ -90,23 +82,22 @@ katrine.addPosition(headTeacher);
 
 
 // Teachers Role
-let johnMath = new TeachersRole(john, math);
-TeachersRoleService.addTeacherRole(johnMath);
-// johnMath.save();
+let johnMath = TeachersRoleService.create(john, math);
+johnMath.save();
 
 
-let JohnClassroomMaster = new TeachersRole(john, classroomTeacher);
-TeachersRoleService.addTeacherRole(JohnClassroomMaster);
+let JohnClassroomMaster = TeachersRoleService.create(john, classroomTeacher);
+JohnClassroomMaster.save();
 
-let katrineBiology = new TeachersRole(katrine, biology);
-TeachersRoleService.addTeacherRole(katrineBiology);
-
+let katrineBiology = TeachersRoleService.create(katrine, biology);
+katrineBiology.save();
 
 StudentGroupService.addTeacherRole(johnMath, '1 E');
 StudentGroupService.addTeacherRole(johnMath, '2 S');
 StudentGroupService.addTeacherRole(JohnClassroomMaster, '1 E');
-// StudentGroupService.addTeacherRole(katrineBiology, '2 S');
+StudentGroupService.addTeacherRole(katrineBiology, '2 S');
 
+//
 // console.log(TeacherService.salary(katrine));
 // console.log(group2S.teachersRole);
 // console.log(group2S);

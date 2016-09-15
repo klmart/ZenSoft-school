@@ -1,4 +1,3 @@
-const Book = require('../models/book.js');
 const books = [];
 
 class BookService {
@@ -42,3 +41,4 @@ class BookService {
 }
 
 module.exports = BookService;
+const Book = require('../models/book.js');

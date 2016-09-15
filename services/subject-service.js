@@ -1,11 +1,10 @@
-const Subject = require('../models/subject');
 const subjects = [];
 
 class SubjectService{
   constructor(){}
 
   static create(name, level, hours, quote){
-    subjects.push(new Subject(name, level, hours, quote))
+    return new Subject(name, level, hours, quote);
   }
 
   static addSubject(subject){
@@ -38,3 +37,4 @@ class SubjectService{
 }
 
 module.exports = SubjectService;
+const Subject = require('../models/subject');

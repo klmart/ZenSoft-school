@@ -1,4 +1,3 @@
-const Position = require('../models/position');
 const positions = [];
 
 class PositionService{
@@ -34,3 +33,4 @@ class PositionService{
 
 }
 module.exports = PositionService;
+const Position = require('../models/position');

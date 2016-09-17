@@ -10,6 +10,7 @@ class Book {
   setSubject(subject){
     this.subject = subject;
   }
+
   getSubject(){
     return this.subject;
   }
@@ -29,8 +30,5 @@ class Book {
     return  this.level;
   }
 
-  save(){
-    BookService.add(this);
-  }
 
 }

@@ -6,10 +6,6 @@ class Position {
     this.setName(name);
   }
 
-  save(){
-    PositionService.add(this);
-  }
-
   setQuote(quote){
     this.quote = quote;
   }
@@ -25,5 +21,6 @@ class Position {
   getName(){
     return this.name;
   }
+
 }
 module.exports = Position;

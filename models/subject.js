@@ -1,4 +1,3 @@
-// const Teacher = require('./teacher');
 const SubjectService = require('../services/subject-service');
 
 class Subject {
@@ -54,9 +53,6 @@ class Subject {
     return this.books;
   }
 
-  save(){
-    SubjectService.addSubject(this);
-  }
 
 }
 

@@ -4,46 +4,41 @@ const TeachersRole = require('./teachers-role');
 const StudentGroupService = require('../services/student-group-service');
 
 class StudentGroup {
-  constructor(level, name){
-    this.setLevel(level);
-    this.setGroupNumber(name);
-    this.students = [];
-    this.teachersRole = [];
-    this.isActive = false;
-  }
+    constructor(level, name) {
+        this.setLevel(level);
+        this.setGroupNumber(name);
+        this.students = [];
+        this.teachersRole = [];
+        this.isActive = false;
+    }
 
-  // isActive(status){
-  //   this.isActive = status;
-  // }
+    isActive(status) {
+        this.isActive = status;
+    }
 
-  setLevel(level){
-    this.level = level;
-  }
+    setLevel(level) {
+        this.level = level;
+    }
 
-  getLevel(){
-    return this.level;
-  }
+    getLevel() {
+        return this.level;
+    }
 
-  setGroupNumber(number){
-    this.groupNumber = number;
-  }
+    setGroupNumber(number) {
+        this.groupNumber = number;
+    }
 
-  getGroupNumber(){
-    return this.groupNumber;
-  }
+    getGroupNumber() {
+        return this.groupNumber;
+    }
 
-  getStudents(){
-    return this.students;
-  }
+    getStudents() {
+        return this.students;
+    }
 
-  groupName(){
-    return `${this.level} ${this.groupNumber}`;
-  }
-
-  save(){
-    StudentGroupService.addStudentGroup(this);
-  }
-
+    groupName() {
+        return `${this.level} ${this.groupNumber}`;
+    }
 }
 
 

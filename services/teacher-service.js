@@ -1,22 +1,10 @@
-
-
-const teachers = [];
+const Store = require('./store');
+teachers = new Store();
 
 class TeacherService {
-    constructor() {
-    }
 
     static create(name, contacts) {
         return new Teacher(name, contacts);
-    }
-
-    static add(teacher) {
-        teachers.push(teacher);
-    }
-
-    static findAll() {
-        let array = [];
-        return array.concat(teachers);
     }
 
     static salary(teacher) {

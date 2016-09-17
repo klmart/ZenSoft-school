@@ -1,9 +1,7 @@
-
-const teachersRole = [];
+const Store = require('./store');
+teachersRole = new Store;
 
 class TeachersRoleService {
-    constructor() {
-    }
 
     static create(teacher, subject){
         return new TeachersRole(teacher, subject);

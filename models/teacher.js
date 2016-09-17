@@ -1,6 +1,4 @@
 const Person = require('./common/person');
-// const Subject = require('./subject');
-// const Position = require('./position');
 const TeacherService = require('../services/teacher-service');
 
 class Teacher extends Person {
@@ -8,12 +6,6 @@ class Teacher extends Person {
     super(name, contacts);
     this.positions = [];
     this.subjects = [];
-    // this.setSubjects(subjects);
-    // this.setPositions(positions);
-  }
-
-  save(){
-    TeacherService.add(this);
   }
 
   setSubjects(subjects){

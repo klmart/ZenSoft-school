@@ -1,5 +1,4 @@
 const Person = require('./common/person');
-// const Parent = require ('./parent');
 const StudentService = require('../services/student-service')
 
 class Student extends Person {
@@ -8,13 +7,10 @@ class Student extends Person {
     this.parents = [];
   }
 
-  save(){
-    StudentService.add(this);
-  }
-
   setParents(parents){
     this.parents = parents;
   }
+
   getParents(){
     return this.parents;
   }
@@ -22,6 +18,7 @@ class Student extends Person {
   addParent(parent){
     this.parents.push(parent);
   }
+
 }
 
 module.exports = Student;

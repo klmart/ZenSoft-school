@@ -21,14 +21,28 @@ class Store extends Map {
         this.set(value.id, value);
     }
 
-    removeById(id) {
-        this.delete(id);
-    }
-
     findById(id) {
         return this.get(id);
     }
 
+    findAll() {
+        let array = [];
+        return array.concat(this);
+    }
+
+    removeById(id) {
+        this.delete(id);
+    }
+
+    findBy(field, param) {
+        let callBack;
+        this.forEach(function(elem){
+            if(elem[field] === param) {
+                callBack = elem;
+            }
+        });
+        return callBack;
+    }
 
 }
 

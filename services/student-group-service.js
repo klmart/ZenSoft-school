@@ -1,24 +1,23 @@
 const StudentService = require('./student-service');
 const TeachersRoleService = require('./teachers-role-service');
-
-const studentGroups = [];
+const Store = require('./store');
+studentGroups = new Store();
 
 class StudentGroupService {
-    constructor() {
-    }
 
     static create(level, groupNumber) {
         return new StudentGroup(level, groupNumber);
     }
 
-    static addStudentGroup(sg) {
-        studentGroups.push(sg);
-    }
-
     static findByGroupName(name) {
-        return studentGroups.find(function (studentGroup) {
-            return studentGroup.groupName() === name;
-        })
+        let group;
+
+        studentGroups.forEach(function (studentGroup) {
+            if(studentGroup.groupName() === name){
+                group = studentGroup;
+            }
+        });
+        return group;
     }
 
     static addStudent(student, groupName) {
@@ -44,17 +43,15 @@ class StudentGroupService {
         return group.students;
     }
 
-    static findAll() {
-        let array = [];
-        return array.concat(studentGroups);
-    }
-
     static activeStudentGroups(){
-        return studentGroups.filter(function (studentGroup) {
-            return studentGroup.isActive;
-        })
+        let activeGroups = [];
+        studentGroups.forEach(function (studentGroup) {
+            if (studentGroup.isActive){
+                activeGroups.push(studentGroup);
+            }
+        });
+        return activeGroups;
     }
-
 }
 
 module.exports = StudentGroupService;

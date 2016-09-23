@@ -1,6 +1,7 @@
 const BookService = require('../services/book-service');
 
 class Book {
+
   constructor(subject, name, level){
     this.setSubject(subject);
     this.setName(name);
@@ -26,9 +27,15 @@ class Book {
   setLevel(level){
     this.level = level;
   }
+
   getLevel(){
     return  this.level;
   }
 
+  save(){
+    BookService.add(this);
+  }
+
 
 }
+module.exports = Book;

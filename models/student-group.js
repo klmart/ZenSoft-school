@@ -39,6 +39,11 @@ class StudentGroup {
     groupName() {
         return `${this.level} ${this.groupNumber}`;
     }
+
+    save(){
+        StudentGroupService.add(this);
+    }
+
 }
 
 

@@ -24,6 +24,9 @@ class TeachersRole {
     return this.teacher
   }
 
+  save(){
+    TeachersRoleService.add(this);
+  }
 
 }
 

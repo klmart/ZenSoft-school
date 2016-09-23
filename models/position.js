@@ -22,5 +22,9 @@ class Position {
     return this.name;
   }
 
+  save(){
+    PositionService.add(this);
+  }
+
 }
 module.exports = Position;

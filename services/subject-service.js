@@ -1,8 +1,13 @@
 const Store = require('./store');
+const Service = require('./service');
 
 subjects = new Store();
 
-class SubjectService{
+class SubjectService extends Service{
+
+  static getStore(){
+    return subjects;
+  }
 
   static create(name, level, hours, quote){
     return new Subject(name, level, hours, quote);

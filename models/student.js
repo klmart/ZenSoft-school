@@ -19,6 +19,10 @@ class Student extends Person {
     this.parents.push(parent);
   }
 
+  save(){
+    StudentService.add(this);
+  }
+
 }
 
 module.exports = Student;

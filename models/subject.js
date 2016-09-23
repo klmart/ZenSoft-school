@@ -53,6 +53,10 @@ class Subject {
     return this.books;
   }
 
+  save(){
+    SubjectService.add(this);
+  }
+
 
 }
 

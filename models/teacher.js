@@ -32,6 +32,11 @@ class Teacher extends Person {
     return this.positions;
   }
 
+  save(){
+    TeacherService.add(this);
+  }
+
+
 }
 
 module.exports = Teacher;

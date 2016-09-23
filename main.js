@@ -12,67 +12,62 @@ const classroomTeacher = SubjectService.create('classroomTeacher', null, 1, 1);
 
 // Parents
 let lyanna = ParentService.create({name: 'Lyanna Stark', contacts: '+ 1 1000 101', dateOfBirth: '1.01.1972'});
-parents.add(lyanna);
-// lyanna.save()ParentService.add
-
+lyanna.save();
 
 let ned = ParentService.create({name: 'Ned Stark', contacts: '+ 1 1000 400', dateOfBirth: '1.01.1961'});
-parents.add(ned);
-
+ned.save();
 
 // Students
 
 let jon =  StudentService.create({name: 'Jon Targaryen', contacts: '+ 1 1000 100', dateOfBirth: '1.01.1980'});
-students.add(jon);
+jon.save();
 jon.addParent(lyanna);
 
 let arya = StudentService.create({name: 'Arya Stark', contacts: '+ 1 1000 200', dateOfBirth: '1.01.1992'});
-students.add(arya);
+arya.save();
 arya.addParent(ned);
 
 let ramsey = StudentService.create({name: 'Ramsey Snow', contacts: '+100 200 300', dateOfBirth: '12.04.1990'});
-students.add(ramsey);
+ramsey.save();
 
 let jofri = StudentService.create({name: 'Jofri Barateon', contacts: '+100 200 320', dateOfBirth: '12.04.1993'});
-students.add(jofri);
-
-
+jofri.save();
 
 // Teachers
 let john = TeacherService.create({name: 'John Doe', contacts: '+200100'});
-teachers.add(john);
+john.save();
 // john.addSubject(math);
 // john.addPosition(director);
 
 let katrine = TeacherService.create({name: 'Katrine Milley', contacts: '+300100299'});
-teachers.add(katrine);
+katrine.save();
 // katrine.addSubject(biology);
 // katrine.addSubject(chemistry);
 // katrine.addPosition(headTeacher);
 
 // Subjects
 let math = SubjectService.create('Math', 1, 3, 100);
-subjects.add(math);
+math.save();
 let biology = SubjectService.create('Biology', 2, 20, 130);
-subjects.add(biology);
+biology.save();
 
 let chemistry = SubjectService.create('Chemistry', 6, 150);
-subjects.add(chemistry);
+chemistry.save();
 
 // Positions
 let director = PositionService.create('Director', 2);
-positions.add(director);
+director.save();
 
 let headTeacher = PositionService.create('Head Teacher', 2500);
-positions.add(headTeacher);
+headTeacher.save();
 
 // Groups
 let group1E = StudentGroupService.create(1,'E');
-studentGroups.add(group1E);
+group1E.save();
 group1E.isActive = true;
 
 let group2S = StudentGroupService.create(2,'S');
-studentGroups.add(group2S);
+group2S.save();
 group2S.isActive = true;
 
 
@@ -87,14 +82,14 @@ StudentGroupService.addStudent(jofri, '2 S');
 
 // Teachers Role
 let johnMath = TeachersRoleService.create(john, math);
-teachersRole.add(johnMath);
+johnMath.save();
 
 
 let JohnClassroomMaster = TeachersRoleService.create(john, classroomTeacher);
-teachersRole.add(JohnClassroomMaster);
+JohnClassroomMaster.save();
 
 let katrineBiology = TeachersRoleService.create(katrine, biology);
-teachersRole.add(katrineBiology);
+katrineBiology.save();
 
 
 StudentGroupService.addTeacherRole(johnMath, '1 E');

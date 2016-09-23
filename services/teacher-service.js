@@ -1,7 +1,13 @@
 const Store = require('./store');
+const Service = require('./service');
+
 teachers = new Store();
 
-class TeacherService {
+class TeacherService extends Service {
+
+    static getStore(){
+        return teachers;
+    }
 
     static create(name, contacts) {
         return new Teacher(name, contacts);

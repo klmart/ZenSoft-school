@@ -1,9 +1,15 @@
 const StudentService = require('./student-service');
 const TeachersRoleService = require('./teachers-role-service');
 const Store = require('./store');
+const Service = require('./service');
+
 studentGroups = new Store();
 
-class StudentGroupService {
+class StudentGroupService extends Service {
+
+    static getStore(){
+        return studentGroups;
+    }
 
     static create(level, groupNumber) {
         return new StudentGroup(level, groupNumber);
@@ -52,6 +58,7 @@ class StudentGroupService {
         });
         return activeGroups;
     }
+
 }
 
 module.exports = StudentGroupService;

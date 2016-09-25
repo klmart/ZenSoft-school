@@ -10,6 +10,10 @@ class Service {
     static add(value) {
         this.getStore().add(value);
     }
+
+    static findBy(field, param){
+        return this.getStore().findBy(field, param);
+    }
 }
 
 module.exports = Service;

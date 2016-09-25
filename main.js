@@ -58,5 +58,8 @@ StudentGroupService.addTeacherRole(johnMath, '2 S');
 StudentGroupService.addTeacherRole(johnClassroomMaster, '1 E');
 StudentGroupService.addTeacherRole(katrineBiology, '2 S');
 
-console.log(TeacherService.salary(jonDoe));
+// console.log(TeacherService.salary(jonDoe));
 
+StudentService.removeById(1);
+StudentService.removeById(2);
+console.log(StudentService.findAll());

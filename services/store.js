@@ -25,11 +25,6 @@ class Store extends Map {
         return this.get(id);
     }
 
-    findAll() {
-        let array = [];
-        return array.concat(this);
-    }
-
     removeById(id) {
         this.delete(id);
     }

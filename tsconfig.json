@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "module": "amd",
+        "target": "es6",
+        "outFile": "distr/main.js"
+    },
+    "files": [
+        "main.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

@@ -11,8 +11,6 @@ const classroomTeacher = SubjectService.create('classroomTeacher', null, 1, 1);
 
 class FillDb {
     static fill() {
-        console.log('start filld db');
-
         // Teachers add subjects
         let jonDoe = TeacherService.findBy('name', 'John Doe');
         let math = SubjectService.findBy('name', 'Math');
@@ -24,6 +22,7 @@ class FillDb {
         let biology = TeacherService.create('name', 'Biology');
         let chemistry = TeacherService.create('name', 'Chemistry');
         let headTeacher = TeacherService.findBy('name', 'Head Teacher');
+
         katrine.addSubject(biology);
         katrine.addSubject(chemistry);
         katrine.addPosition(headTeacher);
@@ -58,6 +57,9 @@ class FillDb {
         StudentGroupService.addTeacherRole(johnMath, '2 S');
         StudentGroupService.addTeacherRole(johnClassroomMaster, '1 E');
         StudentGroupService.addTeacherRole(katrineBiology, '2 S');
+// Books
+        BookService.create(math, 'Mathematics', '5').save();
+        BookService.create(biology, 'Biology', '3').save();
     }
 }
 export default FillDb;

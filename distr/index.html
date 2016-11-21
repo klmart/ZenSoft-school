@@ -4,16 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="../css/bootstrap.css" rel="stylesheet">
     <script data-main="" src="require.js"></script>
-    <script type="text/javascript" src="main.js"></script>
     <script type="text/javascript" src="script.js"></script>
     <title>Document</title>
 </head>
 <body>
-<p id="paragraph"></p>
-<button onclick="myFunction()">"Изменить параграф"</button>
-<div id="myDiv">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <span><h3>Students</h3></span>
+            <form id="studentForm">
+                <input type="text" name = "name" placeholder="Name">
+                <input type="text" name = "contacts" placeholder="Contacts">
+                <input type="text" name = "dateOfBirth" placeholder="Birthday">
+                <button type="button" onclick="createStudent()">Create Student</button>
+            </form>
+            <br>
+            <div id="studentsTable"></div>
+        </div>
+
+        <div class="col-md-6">
+            <span><h3>Teachers</h3></span>
+            <form id="teacherForm">
+                <input type="text" name = "name" placeholder="Name">
+                <input type="text" name = "contacts" placeholder="Contacts">
+                <input type="text" name = "dateOfBirth" placeholder="Birthday">
+                <input type="text" name = "positions" placeholder="Positions">
+                <input type="text" name = "subjects" placeholder="Subjects">
+                <button type="button" onclick="createTeacher()">Create Teacher</button>
+            </form>
+            <br>
+            <div id="teachersTable"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <span><h3>Subjects</h3></span>
+            <div id="subjectsTable"></div>
+        </div>
+
+        <div class="col-md-6">
+            <span><h3>Parents</h3></span>
+            <div id="parentsTable"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <span><h3>Positions</h3></span>
+            <div id="positionsTable"></div>
+        </div>
+
+        <div class="col-md-6">
+            <span><h3>Books</h3></span>
+            <div id="booksTable"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <span><h3>Student Groups</h3></span>
+            <div id="sgTable"></div>
+        </div>
+
+        <!--<div class="col-md-6">-->
+            <!--<div id="booksTable"></div>-->
+        <!--</div>-->
+    </div>
 
 </div>
+
 </body>
+
 </html>

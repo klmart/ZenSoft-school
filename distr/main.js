@@ -173,6 +173,9 @@ define("models/student", ["require", "exports", "models/common/person", "service
         addParent(parent) {
             this.parents.push(parent);
         }
+        remove() {
+            student_service_1.default.removeById(this.id);
+        }
         save() {
             student_service_1.default.add(this);
         }
@@ -475,6 +478,9 @@ define("models/teacher", ["require", "exports", "models/common/person", "service
         getPositions() {
             return this.positions;
         }
+        remove() {
+            teacher_service_1.default.removeById(this.id);
+        }
         save() {
             teacher_service_1.default.add(this);
         }
@@ -683,14 +689,61 @@ define("services/book-service", ["require", "exports", "services/store", "servic
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = BookService;
 });
-define("main", ["require", "exports", "builder/builder", "services/parent-service", "services/student-service", "services/teacher-service", "services/subject-service", "services/position-service", "services/book-service", "services/student-group-service", "services/teachers-role-service"], function (require, exports, builder_1, parent_service_3, student_service_3, teacher_service_3, subject_service_4, position_service_3, book_service_2, student_group_service_4, teachers_role_service_3) {
+define("builder/fill-db", ["require", "exports", "services/student-service", "services/teacher-service", "services/subject-service", "services/position-service", "services/book-service", "services/student-group-service", "services/teachers-role-service"], function (require, exports, student_service_3, teacher_service_3, subject_service_4, position_service_3, book_service_2, student_group_service_4, teachers_role_service_3) {
     "use strict";
-    // import FillDb from './builder/fill-db';
+    const classroomTeacher = subject_service_4.default.create('classroomTeacher', null, 1, 1);
+    class FillDb {
+        static fill() {
+            // Teachers add subjects
+            let jonDoe = teacher_service_3.default.findBy('name', 'John Doe');
+            let math = subject_service_4.default.findBy('name', 'Math');
+            let director = position_service_3.default.findBy('name', 'Director');
+            jonDoe.addSubject(math);
+            jonDoe.addPosition(director);
+            let katrine = teacher_service_3.default.findBy('name', 'Katrine Milley');
+            let biology = teacher_service_3.default.create('name', 'Biology');
+            let chemistry = teacher_service_3.default.create('name', 'Chemistry');
+            let headTeacher = teacher_service_3.default.findBy('name', 'Head Teacher');
+            katrine.addSubject(biology);
+            katrine.addSubject(chemistry);
+            katrine.addPosition(headTeacher);
+            // // Groups
+            let group1E = student_group_service_4.default.findByGroupName('1 E');
+            group1E.isActive = true;
+            let group2S = student_group_service_4.default.findByGroupName('2 S');
+            group2S.isActive = true;
+            // Student Groups
+            student_group_service_4.default.addStudent(student_service_3.default.findByName('Jon Targaryen'), '1 E');
+            student_group_service_4.default.addStudent(student_service_3.default.findByName('Arya Stark'), '1 E');
+            student_group_service_4.default.addStudent(student_service_3.default.findByName('Ramsey Snow'), '1 E');
+            student_group_service_4.default.addStudent(student_service_3.default.findByName('Ramsey Snow'), '2 S');
+            student_group_service_4.default.addStudent(student_service_3.default.findByName('Jofri Barateon'), '2 S');
+            // Teachers Role
+            let johnMath = teachers_role_service_3.default.create(jonDoe, math);
+            johnMath.save();
+            let johnClassroomMaster = teachers_role_service_3.default.create(jonDoe, classroomTeacher);
+            johnClassroomMaster.save();
+            let katrineBiology = teachers_role_service_3.default.create(katrine, biology);
+            katrineBiology.save();
+            student_group_service_4.default.addTeacherRole(johnMath, '1 E');
+            student_group_service_4.default.addTeacherRole(johnMath, '2 S');
+            student_group_service_4.default.addTeacherRole(johnClassroomMaster, '1 E');
+            student_group_service_4.default.addTeacherRole(katrineBiology, '2 S');
+            // Books
+            book_service_2.default.create(math, 'Mathematics', '5').save();
+            book_service_2.default.create(biology, 'Biology', '3').save();
+        }
+    }
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.default = FillDb;
+});
+define("main", ["require", "exports", "builder/builder", "services/parent-service", "services/student-service", "services/teacher-service", "services/subject-service", "services/position-service", "services/book-service", "services/student-group-service", "services/teachers-role-service", "builder/fill-db"], function (require, exports, builder_1, parent_service_3, student_service_4, teacher_service_4, subject_service_5, position_service_4, book_service_3, student_group_service_5, teachers_role_service_4, fill_db_1) {
+    "use strict";
     // Builder.run();
     // FillDb.fill();
     const Run = function myFunction() {
         document.getElementById('paragraph').innerHTML = 'Привет, Javasript';
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.default = { Run, ParentService: parent_service_3.default, StudentService: student_service_3.default, TeacherService: teacher_service_3.default, SubjectService: subject_service_4.default, PositionService: position_service_3.default, BookService: book_service_2.default, StudentGroupService: student_group_service_4.default, TeachersRoleService: teachers_role_service_3.default, Builder: builder_1.default };
+    exports.default = { Run: Run, ParentService: parent_service_3.default, StudentService: student_service_4.default, TeacherService: teacher_service_4.default, SubjectService: subject_service_5.default, PositionService: position_service_4.default, BookService: book_service_3.default, StudentGroupService: student_group_service_5.default, TeachersRoleService: teachers_role_service_4.default, Builder: builder_1.default, FillDb: fill_db_1.default };
 });

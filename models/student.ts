@@ -20,6 +20,10 @@ class Student extends Person {
     this.parents.push(parent);
   }
 
+  remove(){
+    StudentService.removeById(this.id)
+  }
+
   save(){
     StudentService.add(this);
   }

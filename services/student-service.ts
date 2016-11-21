@@ -5,7 +5,6 @@ import Student from '../models/student'
 const students = new Store();
 
 class StudentService extends Service {
-
     static getStore() {
         return students;
     }

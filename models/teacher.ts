@@ -33,6 +33,10 @@ class Teacher extends Person {
     return this.positions;
   }
 
+  remove(){
+    TeacherService.removeById(this.id)
+  }
+
   save(){
     TeacherService.add(this);
   }

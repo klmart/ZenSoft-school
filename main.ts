@@ -8,7 +8,7 @@ import PositionService from './services/position-service';
 import BookService from'./services/book-service';
 import StudentGroupService from './services/student-group-service';
 import TeachersRoleService from './services/teachers-role-service';
-// import FillDb from './builder/fill-db';
+import FillDb from './builder/fill-db';
 
  // Builder.run();
 
@@ -17,4 +17,4 @@ import TeachersRoleService from './services/teachers-role-service';
 const Run = function myFunction() {
     document.getElementById('paragraph').innerHTML = 'Привет, Javasript';
 };
-export default {Run,ParentService, StudentService, TeacherService, SubjectService, PositionService, BookService, StudentGroupService, TeachersRoleService, Builder};
+export default {Run,ParentService, StudentService, TeacherService, SubjectService, PositionService, BookService, StudentGroupService, TeachersRoleService, Builder, FillDb};

@@ -52,6 +52,10 @@ class Subject {
   getBooks(){
     return this.books;
   }
+  remove(){
+    SubjectService.removeById(this.id)
+  }
+
 
   save(){
     SubjectService.add(this);

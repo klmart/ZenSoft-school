@@ -42,6 +42,11 @@ class StudentGroup {
         return `${this.level} ${this.groupNumber}`;
     }
 
+    remove(){
+        StudentGroupService.removeById(this.id)
+    }
+
+
     save(){
         StudentGroupService.add(this);
     }

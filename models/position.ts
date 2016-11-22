@@ -22,6 +22,10 @@ class Position {
     return this.name;
   }
 
+  remove(){
+    PositionService.removeById(this.id)
+  }
+
   save(){
     PositionService.add(this);
   }

@@ -1,7 +1,4 @@
-// const Teacher = require('./teacher');
-// const Subject = require('./subject');
 import TeachersRoleService from '../services/teachers-role-service';
-
 
 class TeachersRole {
   constructor(teacher, subject){
@@ -24,6 +21,11 @@ class TeachersRole {
   getTeacher(){
     return this.teacher
   }
+
+  remove(){
+    TeachersRole.removeById(this.id)
+  }
+
 
   save(){
     TeachersRoleService.add(this);

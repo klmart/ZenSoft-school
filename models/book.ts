@@ -32,6 +32,11 @@ class Book {
     return  this.level;
   }
 
+  remove(){
+    BookService.removeById(this.id)
+  }
+
+
   save(){
     BookService.add(this);
   }

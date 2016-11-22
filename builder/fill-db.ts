@@ -15,13 +15,16 @@ class FillDb {
         let jonDoe = TeacherService.findBy('name', 'John Doe');
         let math = SubjectService.findBy('name', 'Math');
         let director = PositionService.findBy('name', 'Director');
+        let biology = SubjectService.findBy('name', 'Biology');
+
         jonDoe.addSubject(math);
+        jonDoe.addSubject(biology);
         jonDoe.addPosition(director);
 
+
         let katrine = TeacherService.findBy('name', 'Katrine Milley');
-        let biology = TeacherService.create('name', 'Biology');
-        let chemistry = TeacherService.create('name', 'Chemistry');
-        let headTeacher = TeacherService.findBy('name', 'Head Teacher');
+        let chemistry = SubjectService.findBy('name', 'Chemistry');
+        let headTeacher = PositionService.findBy('name', 'Head Teacher');
 
         katrine.addSubject(biology);
         katrine.addSubject(chemistry);
@@ -57,6 +60,9 @@ class FillDb {
         StudentGroupService.addTeacherRole(johnMath, '2 S');
         StudentGroupService.addTeacherRole(johnClassroomMaster, '1 E');
         StudentGroupService.addTeacherRole(katrineBiology, '2 S');
+        let tr = TeachersRoleService.findAll();
+        console.log(group1E);
+
 // Books
         BookService.create(math, 'Mathematics', '5').save();
         BookService.create(biology, 'Biology', '3').save();

@@ -4,14 +4,19 @@ import ParentService from '../services/parent-service';
 
 class Parent extends Person {
 
-  constructor(name, contacts) {
-    super(name, contacts);
-      this.id;
-  }
+    constructor(name, contacts) {
+        super(name, contacts);
+        this.id;
+    }
 
- save(){
-   ParentService.add(this);
- }
+    remove() {
+        ParentService.removeById(this.id)
+    }
+
+
+    save() {
+        ParentService.add(this);
+    }
 
 }
 

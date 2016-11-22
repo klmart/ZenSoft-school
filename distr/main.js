@@ -114,6 +114,9 @@ define("models/parent", ["require", "exports", "models/common/person", "services
             super(name, contacts);
             this.id;
         }
+        remove() {
+            parent_service_1.default.removeById(this.id);
+        }
         save() {
             parent_service_1.default.add(this);
         }
@@ -223,8 +226,8 @@ define("builder/data/teacher-data", ["require", "exports"], function (require, e
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = {
-        john: { name: 'John Doe', contacts: '+200100' },
-        katrine: { name: 'Katrine Milley', contacts: '+300100299' }
+        john: { name: 'John Doe', dateOfBirth: '123123', contacts: '+200100' },
+        katrine: { name: 'Katrine Milley', dateOfBirth: '023292093', contacts: '+300100299' }
     };
 });
 define("models/subject", ["require", "exports", "services/subject-service"], function (require, exports, subject_service_1) {
@@ -269,6 +272,9 @@ define("models/subject", ["require", "exports", "services/subject-service"], fun
         }
         getBooks() {
             return this.books;
+        }
+        remove() {
+            subject_service_1.default.removeById(this.id);
         }
         save() {
             subject_service_1.default.add(this);
@@ -328,6 +334,9 @@ define("models/student-group", ["require", "exports", "services/student-group-se
         }
         groupName() {
             return `${this.level} ${this.groupNumber}`;
+        }
+        remove() {
+            student_group_service_1.default.removeById(this.id);
         }
         save() {
             student_group_service_1.default.add(this);
@@ -409,6 +418,9 @@ define("models/teachers-role", ["require", "exports", "services/teachers-role-se
         }
         getTeacher() {
             return this.teacher;
+        }
+        remove() {
+            TeachersRole.removeById(this.id);
         }
         save() {
             teachers_role_service_1.default.add(this);
@@ -574,6 +586,9 @@ define("models/position", ["require", "exports", "services/position-service"], f
         getName() {
             return this.name;
         }
+        remove() {
+            position_service_1.default.removeById(this.id);
+        }
         save() {
             position_service_1.default.add(this);
         }
@@ -668,6 +683,9 @@ define("models/book", ["require", "exports", "services/book-service"], function 
         getLevel() {
             return this.level;
         }
+        remove() {
+            book_service_1.default.removeById(this.id);
+        }
         save() {
             book_service_1.default.add(this);
         }
@@ -698,12 +716,13 @@ define("builder/fill-db", ["require", "exports", "services/student-service", "se
             let jonDoe = teacher_service_3.default.findBy('name', 'John Doe');
             let math = subject_service_4.default.findBy('name', 'Math');
             let director = position_service_3.default.findBy('name', 'Director');
+            let biology = subject_service_4.default.findBy('name', 'Biology');
             jonDoe.addSubject(math);
+            jonDoe.addSubject(biology);
             jonDoe.addPosition(director);
             let katrine = teacher_service_3.default.findBy('name', 'Katrine Milley');
-            let biology = teacher_service_3.default.create('name', 'Biology');
-            let chemistry = teacher_service_3.default.create('name', 'Chemistry');
-            let headTeacher = teacher_service_3.default.findBy('name', 'Head Teacher');
+            let chemistry = subject_service_4.default.findBy('name', 'Chemistry');
+            let headTeacher = position_service_3.default.findBy('name', 'Head Teacher');
             katrine.addSubject(biology);
             katrine.addSubject(chemistry);
             katrine.addPosition(headTeacher);
@@ -729,6 +748,8 @@ define("builder/fill-db", ["require", "exports", "services/student-service", "se
             student_group_service_4.default.addTeacherRole(johnMath, '2 S');
             student_group_service_4.default.addTeacherRole(johnClassroomMaster, '1 E');
             student_group_service_4.default.addTeacherRole(katrineBiology, '2 S');
+            let tr = teachers_role_service_3.default.findAll();
+            console.log(group1E);
             // Books
             book_service_2.default.create(math, 'Mathematics', '5').save();
             book_service_2.default.create(biology, 'Biology', '3').save();
@@ -745,5 +766,5 @@ define("main", ["require", "exports", "builder/builder", "services/parent-servic
         document.getElementById('paragraph').innerHTML = 'Привет, Javasript';
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.default = { Run: Run, ParentService: parent_service_3.default, StudentService: student_service_4.default, TeacherService: teacher_service_4.default, SubjectService: subject_service_5.default, PositionService: position_service_4.default, BookService: book_service_3.default, StudentGroupService: student_group_service_5.default, TeachersRoleService: teachers_role_service_4.default, Builder: builder_1.default, FillDb: fill_db_1.default };
+    exports.default = { Run, ParentService: parent_service_3.default, StudentService: student_service_4.default, TeacherService: teacher_service_4.default, SubjectService: subject_service_5.default, PositionService: position_service_4.default, BookService: book_service_3.default, StudentGroupService: student_group_service_5.default, TeachersRoleService: teachers_role_service_4.default, Builder: builder_1.default, FillDb: fill_db_1.default };
 });

@@ -38,8 +38,14 @@ class FillDb {
         let group2S = StudentGroupService.findByGroupName('2 S');
         group2S.isActive = true;
 
+//Parents
+        const nedStark = ParentService.findBy('name', 'Ned Stark');
+//Students
+        const jonTargaryen = StudentService.findByName('Jon Targaryen');
+        jonTargaryen.addParent(nedStark);
+
 // Student Groups
-        StudentGroupService.addStudent(StudentService.findByName('Jon Targaryen'), '1 E');
+        StudentGroupService.addStudent(jonTargaryen, '1 E');
         StudentGroupService.addStudent(StudentService.findByName('Arya Stark'), '1 E');
         StudentGroupService.addStudent(StudentService.findByName('Ramsey Snow'), '1 E');
 
@@ -60,9 +66,6 @@ class FillDb {
         StudentGroupService.addTeacherRole(johnMath, '2 S');
         StudentGroupService.addTeacherRole(johnClassroomMaster, '1 E');
         StudentGroupService.addTeacherRole(katrineBiology, '2 S');
-        let tr = TeachersRoleService.findAll();
-        console.log(group1E);
-
 // Books
         BookService.create(math, 'Mathematics', '5').save();
         BookService.create(biology, 'Biology', '3').save();

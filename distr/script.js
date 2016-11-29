@@ -28,6 +28,7 @@ function createParentSelect(selectDivId, selectListId) {
 }
 
 function createStudentEditButton(object) {
+    createParentSelect('modalParentSelect', 'modalParentSelectList')
     let td = document.createElement('td');
     let button = document.createElement('button');
     button.setAttribute('data-toggle', 'modal');
@@ -40,7 +41,7 @@ function createStudentEditButton(object) {
         studentForm.updateStudent.innerHTML = 'Edit Student';
         studentForm.updateStudent.onclick = function () {
             //ToDo: fix select correct parent
-            object.addParent(selectedParent);
+            // object.addParent(selectedParent);
             object.setName(studentForm.name.value);
             object.setContacts(studentForm.contacts.value);
             object.setDateOfBirth(studentForm.dateOfBirth.value);
@@ -148,7 +149,7 @@ function removeObject(object, callback) {
 
 function createStudentsTable() {
     require(['main'], function (Main) {
-        createParentSelect('selectParent', 'parentSelectList');
+        createParentSelect('parentSelect', 'parentSelectList');
         const students = Main.default.StudentService.findAll();
         studentsTable = document.getElementById('studentsTable');
         studentsTable.innerHTML = '';

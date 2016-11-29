@@ -1,96 +1,8 @@
-function tableGo() {
-    require(['main'], function (Main) {
-        const teachers = Main.default.TeacherService.findAll();
-        const subjects = Main.default.SubjectService.findAll();
-        const parents = Main.default.ParentService.findAll();
-        const positions = Main.default.PositionService.findAll();
-        const books = Main.default.BookService.findAll();
-        const sg = Main.default.StudentGroupService.findAll();
-
-
-        teachersTable = document.getElementById('teachersTable');
-        table = createtable(teachers, getFields(Main.default.TeacherService.findAll()));
-        teachersTable.appendChild(table);
-
-
-        positionsTable = document.getElementById('positionsTable');
-        table = createtable(positions, getFields(Main.default.PositionService.findAll()));
-        positionsTable.appendChild(table);
-
-        booksTable = document.getElementById('booksTable');
-        table = createtable(books, getFields(Main.default.BookService.findAll()));
-        booksTable.appendChild(table);
-
-
-        sgTable = document.getElementById('sgTable');
-        table = createtable(sg, getFields(Main.default.StudentGroupService.findAll()));
-        sgTable.appendChild(table);
-    });
-
-}
-
-let selectedParent = undefined;
-
 function getFields(store) {
     let firstObject = store.next().value;
     return Object.keys(firstObject);
 }
 
-function createTableMain(store, tableFields) {
-    tableFields.push('Actions');
-    function createTd(value) {
-        let td = document.createElement('td');
-        td.textContent = '' + value;
-        return td;
-    }
-
-    function createTh(value) {
-        let th = document.createElement('th');
-        th.textContent = '' + value;
-        return th;
-    }
-
-    function createDeleteButton(object) {
-        let td = document.createElement('td');
-        let button = document.createElement('button');
-        button.innerHTML = 'Delete';
-        button.onclick = function () {
-            removeObject(object);
-        };
-        td.appendChild(button);
-        return td;
-    }
-
-    table = document.createElement('table');
-    table.className = "table table-bordered";
-    thead = document.createElement('thead');
-    table.appendChild(thead);
-    tr = document.createElement('tr');
-    thead.appendChild(tr);
-
-    tableFields.forEach(function (field) {
-        th = createTh(field);
-        tr.appendChild(th);
-    });
-
-    tbody = document.createElement('tbody');
-    table.appendChild(tbody);
-
-    for (let object of store) {
-        trb = document.createElement('tr');
-        Object.getOwnPropertyNames(object).forEach(function (val) {
-            const value = object[val];
-            const td = createTd(value);
-            trb.appendChild(td);
-        });
-        trb.appendChild(createDeleteButton(object));
-
-        tbody.appendChild(trb);
-    }
-
-    return table
-
-}
 function createStudentEditButton(object) {
     let td = document.createElement('td');
     let button = document.createElement('button');
@@ -115,7 +27,6 @@ function createStudentEditButton(object) {
     td.appendChild(button);
     return td;
 }
-
 
 function createTable(store, tableFields, deleteActionCallback, editButtonCode) {
 
@@ -235,14 +146,10 @@ function createStudentsTable() {
 //Create and append the options
             for (let parent of parents) {
                 var option = document.createElement("option");
-                option.setAttribute("value", parent);
+                option.setAttribute("value", parent.id);
                 option.text = parent.name;
                 selectList.appendChild(option);
-                selectList.onclick = function () {
-                    setParent(parent);
-                };
             }
-
         }
 
         createTeacherSelect();
@@ -318,12 +225,12 @@ function createSG() {
 
 function createStudent() {
     require(['main'], function (Main) {
-        // console.log(selectedParent);
-        // var parentSelect = document.getElementById('parentSelect');
-        // var selected = parentSelect.options[parentSelect.selectedIndex].value;
+        let parentSelect = document.getElementById('parentSelect');
+        let selected = parentSelect.options[parentSelect.selectedIndex].value;
+        let selectedParent = Main.default.ParentService.findById(+selected);
+        console.log(selected);
         const studentForm = document.getElementById('studentForm');
         const student = Main.default.StudentService.create(createObject(studentForm));
-        //ToDo: fix select correct parent
         student.addParent(selectedParent);
         student.save();
 

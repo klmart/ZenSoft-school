@@ -3,6 +3,30 @@ function getFields(store) {
     return Object.keys(firstObject);
 }
 
+function createParentSelect(selectDivId, selectListId) {
+    require(['main'], function (Main) {
+        let selectParent = document.getElementById(selectDivId);
+        selectParent.innerHTML = '';
+
+//Create array of options to be added
+        const parents = Main.default.ParentService.findAll();
+
+//Create and append select list
+        var selectList = document.createElement("select");
+        selectList.setAttribute("id", selectListId);
+        selectParent.appendChild(selectList);
+
+
+//Create and append the options
+        for (let parent of parents) {
+            var option = document.createElement("option");
+            option.setAttribute("value", parent.id);
+            option.text = parent.name;
+            selectList.appendChild(option);
+        }
+    });
+}
+
 function createStudentEditButton(object) {
     let td = document.createElement('td');
     let button = document.createElement('button');
@@ -122,37 +146,9 @@ function removeObject(object, callback) {
     // createBooksTable();
 }
 
-function setParent(value) {
-    console.log('---------------');
-    console.log(value);
-    selectedParent = value;
-}
-
 function createStudentsTable() {
     require(['main'], function (Main) {
-        function createTeacherSelect() {
-            let selectParent = document.getElementById("selectParent2");
-            selectParent.innerHTML = '';
-
-//Create array of options to be added
-            const parents = Main.default.ParentService.findAll();
-
-//Create and append select list
-            var selectList = document.createElement("select");
-            selectList.setAttribute("id", "parentSelect");
-            selectParent.appendChild(selectList);
-
-
-//Create and append the options
-            for (let parent of parents) {
-                var option = document.createElement("option");
-                option.setAttribute("value", parent.id);
-                option.text = parent.name;
-                selectList.appendChild(option);
-            }
-        }
-
-        createTeacherSelect();
+        createParentSelect('selectParent', 'parentSelectList');
         const students = Main.default.StudentService.findAll();
         studentsTable = document.getElementById('studentsTable');
         studentsTable.innerHTML = '';
@@ -225,10 +221,9 @@ function createSG() {
 
 function createStudent() {
     require(['main'], function (Main) {
-        let parentSelect = document.getElementById('parentSelect');
+        let parentSelect = document.getElementById('parentSelectList');
         let selected = parentSelect.options[parentSelect.selectedIndex].value;
         let selectedParent = Main.default.ParentService.findById(+selected);
-        console.log(selected);
         const studentForm = document.getElementById('studentForm');
         const student = Main.default.StudentService.create(createObject(studentForm));
         student.addParent(selectedParent);

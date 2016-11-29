@@ -7,9 +7,41 @@
     <link href="../css/bootstrap.css" rel="stylesheet">
     <script data-main="" src="require.js"></script>
     <script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Document</title>
 </head>
 <body>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Student</h4>
+            </div>
+            <div class="modal-body">
+                <form id="modalEditStudent">
+                    <input type="text" name="name" placeholder="Name">
+                    <input type="text" name="contacts" placeholder="Contacts">
+                    <input type="text" name="dateOfBirth" placeholder="Birthday">
+                    <!--<div id="selectParent"></div>-->
+                    <br>
+                    <button type="button" name="updateStudent" onclick="createStudent()">Create Student</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
 <div class="container-fluid">
     <div class="row">
@@ -19,9 +51,9 @@
                 <input type="text" name="name" placeholder="Name">
                 <input type="text" name="contacts" placeholder="Contacts">
                 <input type="text" name="dateOfBirth" placeholder="Birthday">
-                <div id="selectParent"></div>
+                <div id="selectParent2"></div>
                 <br>
-                <button type="button" onclick="createStudent()">Create Student</button>
+                <button type="button" name="as" onclick="createStudent()">Create Student</button>
             </form>
             <br>
             <div id="studentsTable"></div>

@@ -769,5 +769,5 @@ define("main", ["require", "exports", "builder/builder", "services/parent-servic
         document.getElementById('paragraph').innerHTML = 'Привет, Javasript';
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.default = { Run, ParentService: parent_service_4.default, StudentService: student_service_4.default, TeacherService: teacher_service_4.default, SubjectService: subject_service_5.default, PositionService: position_service_4.default, BookService: book_service_3.default, StudentGroupService: student_group_service_5.default, TeachersRoleService: teachers_role_service_4.default, Builder: builder_1.default, FillDb: fill_db_1.default };
+    exports.default = { Run: Run, ParentService: parent_service_4.default, StudentService: student_service_4.default, TeacherService: teacher_service_4.default, SubjectService: subject_service_5.default, PositionService: position_service_4.default, BookService: book_service_3.default, StudentGroupService: student_group_service_5.default, TeachersRoleService: teachers_role_service_4.default, Builder: builder_1.default, FillDb: fill_db_1.default };
 });

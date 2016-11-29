@@ -92,7 +92,7 @@ function createTableMain(store, tableFields) {
 
 }
 
-function createTable(store, tableFields, deleteActionCallback) {
+function createTable(store, tableFields, deleteActionCallback, editActionCallback) {
 
     tableFields.push('Actions');
     function createTd(value) {
@@ -114,6 +114,31 @@ function createTable(store, tableFields, deleteActionCallback) {
         button.onclick = function () {
             removeObject(object, deleteActionCallback);
         };
+        td.appendChild(button);
+        return td;
+    }
+
+    function createEditButton(object, editActionCallback) {
+        let td = document.createElement('td');
+        let button = document.createElement('button');
+        button.setAttribute('data-toggle', 'modal');
+        button.setAttribute('data-target', '#myModal');
+            button.onclick = function () {
+                studentForm = document.getElementById('modalEditStudent');
+                studentForm.name.value = object.name;
+                studentForm.contacts.value = object.contacts;
+                studentForm.dateOfBirth.value = object.dateOfBirth;
+                studentForm.updateStudent.innerHTML = 'Edit Student';
+                studentForm.updateStudent.onclick = function () {
+                    //ToDo: fix select correct parent
+                    object.addParent(selectedParent);
+                    object.setName(studentForm.name.value);
+                    object.setContacts(studentForm.contacts.value);
+                    object.setDateOfBirth(studentForm.dateOfBirth.value);
+                    createStudentsTable();
+            };
+        };
+        button.innerHTML = 'Edit';
         td.appendChild(button);
         return td;
     }
@@ -158,7 +183,7 @@ function createTable(store, tableFields, deleteActionCallback) {
         });
 
         trb.appendChild(createDeleteButton(object, deleteActionCallback));
-
+        trb.appendChild(createEditButton(object));
         tbody.appendChild(trb);
     }
     return table
@@ -191,7 +216,7 @@ function testFunction(value) {
 function createStudentsTable() {
     require(['main'], function (Main) {
         function createTeacherSelect() {
-            let selectParent = document.getElementById("selectParent");
+            let selectParent = document.getElementById("selectParent2");
             selectParent.innerHTML = '';
 
 //Create array of options to be added
@@ -215,11 +240,12 @@ function createStudentsTable() {
             }
 
         }
+
         createTeacherSelect();
         const students = Main.default.StudentService.findAll();
         studentsTable = document.getElementById('studentsTable');
         studentsTable.innerHTML = '';
-        table = createTable(students, getFields(Main.default.StudentService.findAll()),createStudentsTable);
+        table = createTable(students, getFields(Main.default.StudentService.findAll()), createStudentsTable);
         studentsTable.appendChild(table);
     });
 }
@@ -241,7 +267,7 @@ function createSubjectsTable() {
         const subjects = Main.default.SubjectService.findAll();
         subjectsTable = document.getElementById('subjectsTable');
         subjectsTable.innerHTML = '';
-        table = createTable(subjects, getFields(Main.default.SubjectService.findAll()),createSubjectsTable);
+        table = createTable(subjects, getFields(Main.default.SubjectService.findAll()), createSubjectsTable);
         subjectsTable.appendChild(table);
     });
 }
@@ -251,7 +277,7 @@ function createPositionsTable() {
         const positions = Main.default.PositionService.findAll();
         positionsTable = document.getElementById('positionsTable');
         positionsTable.innerHTML = '';
-        table = createTable(positions, getFields(Main.default.PositionService.findAll()),createPositionsTable);
+        table = createTable(positions, getFields(Main.default.PositionService.findAll()), createPositionsTable);
         positionsTable.appendChild(table);
     });
 }
@@ -261,7 +287,7 @@ function createParentsTable() {
         const parents = Main.default.ParentService.findAll();
         parentsTable = document.getElementById('parentsTable');
         parentsTable.innerHTML = '';
-        table = createTable(parents, getFields(Main.default.ParentService.findAll()),createParentsTable);
+        table = createTable(parents, getFields(Main.default.ParentService.findAll()), createParentsTable);
         parentsTable.appendChild(table);
     });
 }
@@ -271,7 +297,7 @@ function createBooksTable() {
         const books = Main.default.BookService.findAll();
         booksTable = document.getElementById('booksTable');
         booksTable.innerHTML = '';
-        table = createTable(books, getFields(Main.default.BookService.findAll()),createBooksTable);
+        table = createTable(books, getFields(Main.default.BookService.findAll()), createBooksTable);
         booksTable.appendChild(table);
     });
 }
@@ -281,21 +307,19 @@ function createSG() {
         const sg = Main.default.StudentGroupService.findAll();
         sgTable = document.getElementById('sgTable');
         sgTable.innerHTML = '';
-        table = createTable(sg, getFields(Main.default.StudentGroupService.findAll()),createSG);
+        table = createTable(sg, getFields(Main.default.StudentGroupService.findAll()), createSG);
         sgTable.appendChild(table);
     });
 }
 
-
 function createStudent() {
     require(['main'], function (Main) {
         // console.log(selectedParent);
-        var parentSelect = document.getElementById('parentSelect');
-        var selected = parentSelect.options[parentSelect.selectedIndex].value;
-        console.log(selected);
-
+        // var parentSelect = document.getElementById('parentSelect');
+        // var selected = parentSelect.options[parentSelect.selectedIndex].value;
         const studentForm = document.getElementById('studentForm');
         const student = Main.default.StudentService.create(createObject(studentForm));
+        //ToDo: fix select correct parent
         student.addParent(selectedParent);
         student.save();
 

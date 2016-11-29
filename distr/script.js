@@ -29,7 +29,7 @@ function tableGo() {
 
 }
 
-var selectedParent = undefined;
+let selectedParent = undefined;
 
 function getFields(store) {
     let firstObject = store.next().value;
@@ -91,8 +91,33 @@ function createTableMain(store, tableFields) {
     return table
 
 }
+function createStudentEditButton(object) {
+    let td = document.createElement('td');
+    let button = document.createElement('button');
+    button.setAttribute('data-toggle', 'modal');
+    button.setAttribute('data-target', '#myModal');
+    button.onclick = function () {
+        studentForm = document.getElementById('modalEditStudent');
+        studentForm.name.value = object.name;
+        studentForm.contacts.value = object.contacts;
+        studentForm.dateOfBirth.value = object.dateOfBirth;
+        studentForm.updateStudent.innerHTML = 'Edit Student';
+        studentForm.updateStudent.onclick = function () {
+            //ToDo: fix select correct parent
+            object.addParent(selectedParent);
+            object.setName(studentForm.name.value);
+            object.setContacts(studentForm.contacts.value);
+            object.setDateOfBirth(studentForm.dateOfBirth.value);
+            createStudentsTable();
+        };
+    };
+    button.innerHTML = 'Edit';
+    td.appendChild(button);
+    return td;
+}
 
-function createTable(store, tableFields, deleteActionCallback, editActionCallback) {
+
+function createTable(store, tableFields, deleteActionCallback, editButtonCode) {
 
     tableFields.push('Actions');
     function createTd(value) {
@@ -114,31 +139,6 @@ function createTable(store, tableFields, deleteActionCallback, editActionCallbac
         button.onclick = function () {
             removeObject(object, deleteActionCallback);
         };
-        td.appendChild(button);
-        return td;
-    }
-
-    function createEditButton(object, editActionCallback) {
-        let td = document.createElement('td');
-        let button = document.createElement('button');
-        button.setAttribute('data-toggle', 'modal');
-        button.setAttribute('data-target', '#myModal');
-            button.onclick = function () {
-                studentForm = document.getElementById('modalEditStudent');
-                studentForm.name.value = object.name;
-                studentForm.contacts.value = object.contacts;
-                studentForm.dateOfBirth.value = object.dateOfBirth;
-                studentForm.updateStudent.innerHTML = 'Edit Student';
-                studentForm.updateStudent.onclick = function () {
-                    //ToDo: fix select correct parent
-                    object.addParent(selectedParent);
-                    object.setName(studentForm.name.value);
-                    object.setContacts(studentForm.contacts.value);
-                    object.setDateOfBirth(studentForm.dateOfBirth.value);
-                    createStudentsTable();
-            };
-        };
-        button.innerHTML = 'Edit';
         td.appendChild(button);
         return td;
     }
@@ -183,7 +183,9 @@ function createTable(store, tableFields, deleteActionCallback, editActionCallbac
         });
 
         trb.appendChild(createDeleteButton(object, deleteActionCallback));
-        trb.appendChild(createEditButton(object));
+        if (editButtonCode == 'createStudentEditButton') {
+            trb.appendChild(createStudentEditButton(object));
+        }
         tbody.appendChild(trb);
     }
     return table
@@ -209,7 +211,9 @@ function removeObject(object, callback) {
     // createBooksTable();
 }
 
-function testFunction(value) {
+function setParent(value) {
+    console.log('---------------');
+    console.log(value);
     selectedParent = value;
 }
 
@@ -235,7 +239,7 @@ function createStudentsTable() {
                 option.text = parent.name;
                 selectList.appendChild(option);
                 selectList.onclick = function () {
-                    testFunction(parent);
+                    setParent(parent);
                 };
             }
 
@@ -245,7 +249,7 @@ function createStudentsTable() {
         const students = Main.default.StudentService.findAll();
         studentsTable = document.getElementById('studentsTable');
         studentsTable.innerHTML = '';
-        table = createTable(students, getFields(Main.default.StudentService.findAll()), createStudentsTable);
+        table = createTable(students, getFields(Main.default.StudentService.findAll()), createStudentsTable, 'createStudentEditButton');
         studentsTable.appendChild(table);
     });
 }

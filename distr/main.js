@@ -761,13 +761,228 @@ define("builder/fill-db", ["require", "exports", "services/parent-service", "ser
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = FillDb;
 });
-define("main", ["require", "exports", "builder/builder", "services/parent-service", "services/student-service", "services/teacher-service", "services/subject-service", "services/position-service", "services/book-service", "services/student-group-service", "services/teachers-role-service", "builder/fill-db"], function (require, exports, builder_1, parent_service_4, student_service_4, teacher_service_4, subject_service_5, position_service_4, book_service_3, student_group_service_5, teachers_role_service_4, fill_db_1) {
+define("main", ["require", "exports", "builder/builder", "services/parent-service", "services/student-service", "services/teacher-service", "services/subject-service", "services/position-service", "services/book-service", "services/student-group-service", "builder/fill-db"], function (require, exports, builder_1, parent_service_4, student_service_4, teacher_service_4, subject_service_5, position_service_4, book_service_3, student_group_service_5, fill_db_1) {
     "use strict";
-    // Builder.run();
-    // FillDb.fill();
+    function getFields(store) {
+        let firstObject = store.next().value;
+        return Object.keys(firstObject);
+    }
+    function createParentSelect(selectDivId, selectListId) {
+        let selectParent = document.getElementById(selectDivId);
+        selectParent.innerHTML = '';
+        //Create array of options to be added
+        const parents = parent_service_4.default.findAll();
+        //Create and append select list
+        let selectList = document.createElement("select");
+        selectList.setAttribute("id", selectListId);
+        selectParent.appendChild(selectList);
+        //Create and append the options
+        for (let parent of parents) {
+            let option = document.createElement("option");
+            option.setAttribute("value", parent.id);
+            option.text = parent.name;
+            selectList.appendChild(option);
+        }
+    }
+    function createStudentEditButton(object) {
+        createParentSelect('modalParentSelect', 'modalParentSelectList');
+        let td = document.createElement('td');
+        let button = document.createElement('button');
+        button.setAttribute('data-toggle', 'modal');
+        button.setAttribute('data-target', '#myModal');
+        button.onclick = function () {
+            const studentForm = document.getElementById('modalEditStudent');
+            studentForm.name.value = object.name;
+            studentForm.contacts.value = object.contacts;
+            studentForm.dateOfBirth.value = object.dateOfBirth;
+            studentForm.updateStudent.innerHTML = 'Edit Student';
+            studentForm.updateStudent.onclick = function () {
+                object.addParent(getSelectedParent());
+                object.setName(studentForm.name.value);
+                object.setContacts(studentForm.contacts.value);
+                object.setDateOfBirth(studentForm.dateOfBirth.value);
+                createStudentsTable();
+            };
+        };
+        button.innerHTML = 'Edit';
+        td.appendChild(button);
+        return td;
+    }
+    function createTable(store, tableFields, deleteActionCallback, editButtonCode) {
+        tableFields.push('Actions');
+        function createTd(value) {
+            let td = document.createElement('td');
+            td.textContent = '' + value;
+            return td;
+        }
+        function createTh(value) {
+            let th = document.createElement('th');
+            th.textContent = '' + value;
+            return th;
+        }
+        function createDeleteButton(object, deleteActionCallback) {
+            let td = document.createElement('td');
+            let button = document.createElement('button');
+            button.innerHTML = 'Delete';
+            button.onclick = function () {
+                removeObject(object, deleteActionCallback);
+            };
+            td.appendChild(button);
+            return td;
+        }
+        const table = document.createElement('table');
+        table.className = "table table-bordered";
+        let thead = document.createElement('thead');
+        table.appendChild(thead);
+        let tr = document.createElement('tr');
+        thead.appendChild(tr);
+        tableFields.forEach(function (field) {
+            let th = createTh(field);
+            tr.appendChild(th);
+        });
+        let tbody = document.createElement('tbody');
+        table.appendChild(tbody);
+        for (let object of store) {
+            let trb = document.createElement('tr');
+            Object.getOwnPropertyNames(object)
+                .forEach(function (val) {
+                const value = object[val];
+                if (value instanceof Array) {
+                    if (value.length == 0) {
+                        trb.appendChild(createTd(value));
+                    }
+                    let td = document.createElement('td');
+                    value.forEach(function (element) {
+                        //ToDo: Удалить проверку на элемент
+                        if (element) {
+                            // tdA.appendChild(document.createTextNode(element.name));
+                            td.appendChild(createTd(element.name));
+                        }
+                        trb.appendChild(td);
+                    });
+                }
+                else {
+                    const td = createTd(value);
+                    trb.appendChild(td);
+                }
+            });
+            trb.appendChild(createDeleteButton(object, deleteActionCallback));
+            if (editButtonCode == 'createStudentEditButton') {
+                trb.appendChild(createStudentEditButton(object));
+            }
+            tbody.appendChild(trb);
+        }
+        return table;
+    }
+    function createObject(form) {
+        const object = {};
+        for (let i = 0; i < form.length; i++) {
+            object[form.elements[i].name] = form.elements[i].value;
+            form[i].value = '';
+        }
+        return object;
+    }
+    function removeObject(object, callback) {
+        object.remove();
+        callback();
+        // createStudentsTable();
+        // createTeachersTable();
+        // createSubjectsTable();
+        // createParentsTable();
+        // createPositionsTable();
+        // createBooksTable();
+    }
+    function createStudentsTable() {
+        createParentSelect('parentSelect', 'parentSelectList');
+        const students = student_service_4.default.findAll();
+        const studentsTable = document.getElementById('studentsTable');
+        studentsTable.innerHTML = '';
+        const table = createTable(students, getFields(student_service_4.default.findAll()), createStudentsTable, 'createStudentEditButton');
+        studentsTable.appendChild(table);
+    }
+    function createTeachersTable() {
+        const teachers = teacher_service_4.default.findAll();
+        const teachersTable = document.getElementById('teachersTable');
+        teachersTable.innerHTML = '';
+        const table = createTable(teachers, getFields(teacher_service_4.default.findAll()), createTeachersTable, 'ignore');
+        teachersTable.appendChild(table);
+    }
+    function createSubjectsTable() {
+        const subjects = subject_service_5.default.findAll();
+        let subjectsTable = document.getElementById('subjectsTable');
+        subjectsTable.innerHTML = '';
+        let table = createTable(subjects, getFields(subject_service_5.default.findAll()), createSubjectsTable, 'ignore');
+        subjectsTable.appendChild(table);
+    }
+    function createPositionsTable() {
+        const positions = position_service_4.default.findAll();
+        const positionsTable = document.getElementById('positionsTable');
+        positionsTable.innerHTML = '';
+        const table = createTable(positions, getFields(position_service_4.default.findAll()), createPositionsTable, 'ignore');
+        positionsTable.appendChild(table);
+    }
+    function createParentsTable() {
+        const parents = parent_service_4.default.findAll();
+        const parentsTable = document.getElementById('parentsTable');
+        parentsTable.innerHTML = '';
+        const table = createTable(parents, getFields(parent_service_4.default.findAll()), createParentsTable, 'ignore');
+        parentsTable.appendChild(table);
+    }
+    function createBooksTable() {
+        const books = book_service_3.default.findAll();
+        const booksTable = document.getElementById('booksTable');
+        booksTable.innerHTML = '';
+        const table = createTable(books, getFields(book_service_3.default.findAll()), createBooksTable, 'ignore');
+        booksTable.appendChild(table);
+    }
+    function createSG() {
+        const sg = student_group_service_5.default.findAll();
+        const sgTable = document.getElementById('sgTable');
+        sgTable.innerHTML = '';
+        const table = createTable(sg, getFields(student_group_service_5.default.findAll()), createSG, 'ignore');
+        sgTable.appendChild(table);
+    }
+    function getSelectedParent() {
+        let parentSelect = document.getElementById('parentSelectList');
+        let selected = parentSelect.options[parentSelect.selectedIndex].value;
+        return parent_service_4.default.findById(+selected);
+    }
+    function createStudent() {
+        console.log('111');
+        // let parentSelect   = document.getElementById('parentSelectList');
+        // let selected       = parentSelect.options[parentSelect.selectedIndex].value;
+        // let selectedParent = Main.default.ParentService.findById(+selected);
+        let parent = getSelectedParent();
+        const studentForm = document.getElementById('studentForm');
+        const student = student_service_4.default.create(createObject(studentForm));
+        student.addParent(parent);
+        student.save();
+        createStudentsTable();
+        // this.parentNode.remove();
+    }
+    function createTeacher() {
+        let teacherForm = document.getElementById('teacherForm');
+        // let teacher = TeacherService.create(createObject(teacherForm));
+        teacher.save();
+        createTeachersTable();
+    }
+    // let element = document.getElementById('createStudentButton');
+    // element.addEventListener('click', createStudent);
     const Run = function myFunction() {
-        document.getElementById('paragraph').innerHTML = 'Привет, Javasript';
+        console.log('start Run');
+        // document.getElementById('paragraph').innerHTML = 'Привет, Javasript';
+        builder_1.default.run();
+        fill_db_1.default.fill();
+        createStudentsTable();
+        createTeachersTable();
+        createSubjectsTable();
+        createParentsTable();
+        createPositionsTable();
+        createBooksTable();
+        createSG();
     };
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.default = { Run: Run, ParentService: parent_service_4.default, StudentService: student_service_4.default, TeacherService: teacher_service_4.default, SubjectService: subject_service_5.default, PositionService: position_service_4.default, BookService: book_service_3.default, StudentGroupService: student_group_service_5.default, TeachersRoleService: teachers_role_service_4.default, Builder: builder_1.default, FillDb: fill_db_1.default };
+    exports.default = {
+        Run,
+    };
 });
